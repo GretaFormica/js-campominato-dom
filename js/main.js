@@ -59,3 +59,19 @@ function generaCella(testo) {
 
 	return cella;
 }
+
+
+///////numeridiversi
+
+const numeridiversi = [];
+
+while (numeridiversi.length < 10) {
+	random = Math.floor(Math.random() * 20) + 1;
+
+	if (!numeridiversi.includes(random)) {
+
+		numeridiversi.push(random);
+
+	}
+
+}

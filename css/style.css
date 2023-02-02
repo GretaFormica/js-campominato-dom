@@ -52,3 +52,7 @@ body {
 .square.active {
 	background-color: var(--active-bg);
 }
+
+.square.bomb {
+	background-color: var(--odd-bg);
+}
