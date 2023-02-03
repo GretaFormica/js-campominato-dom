@@ -10,6 +10,7 @@
 // - con difficoltà 3 => 49 caselle, con un numero compreso tra 1 e 49, divise in 7 caselle per 7 righe;
 
 const startGameButton = document.getElementById("start-game");
+const bombe = generabombe[1, 100]; // oppure squarenumber se c'e il bonus e mettere bombe globale
 
 startGameButton.addEventListener(
 	"click",
@@ -50,10 +51,31 @@ function generaCella(testo) {
 	const cella = document.createElement("div");
 	cella.classList.add("square");
 	cella.innerHTML = testo;
+
+	cella.setAttribute("data-index", testo);
+
 	cella.addEventListener(
 		"click",
 		function () {
-			console.log(this.innerHTML);
+
+			const cellindex = parseInt(this.getAttribute("data-index"));
+			const activesquare = document.querySelectorAll(".square.active");
+
+			if (bombe.includes(parseInt(this.innerHTML))) {
+				this.classList.add("bomb")
+
+
+				gameover(activesquare, false);
+
+			} else {
+				this.classList.add("active");
+			}
+
+			if (100 - bombe.length - 1 == activesquare.length) {
+
+				gameover(activesquare, true);
+			}
+
 		}
 	);
 
@@ -61,17 +83,46 @@ function generaCella(testo) {
 }
 
 
-///////numeridiversi
+// ///////numeridiversi
 
-const numeridiversi = [];
+// const numeridiversi = [];
 
-while (numeridiversi.length < 10) {
-	random = Math.floor(Math.random() * 20) + 1;
+// while (numeridiversi.length < 10) {
+// 	random = Math.floor(Math.random() * 20) + 1;
 
-	if (!numeridiversi.includes(random)) {
+// 	if (!numeridiversi.includes(random)) {
 
-		numeridiversi.push(random);
+// 		numeridiversi.push(random);
 
+// 	}
+
+// }
+
+
+///generabombe
+
+function generabombe(min, max) {
+	const arraybombe = [];
+
+	while (arraybombe.length < 16) {
+		const randomnumber = Math.floor(Math.random() * max - min + 1) + min
+
+		if (!arraybombe.includes(randomnumber)) {
+
+			arraybombe.push(randomnumber);
+		}
+	}
+}
+
+
+///game over
+
+function gameover(activesquare, won) {
+
+	if (won) {
+		alert("hai vinto e hai totalizzato" + activesquare.length + "punti");
+	} else {
+		alert("hai perso e hai totalizzato" + activesquare.length + "punti");
 	}
 
 }
